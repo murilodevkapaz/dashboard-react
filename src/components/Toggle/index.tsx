@@ -6,32 +6,32 @@ interface Iprops{
 
 }
 
-class Tog extends Component {
-    constructor(props:Iprops) {
-        super(props);
-        this.state = { checked: false };
-        this.handleChange = this.handleChange.bind(this);
-      }
+// class Tog extends Component {
+//     constructor(props:Iprops) {
+//         super(props);
+//         this.state = { checked: false };
+//         this.handleChange = this.handleChange.bind(this);
+//       }
 
-      handleChange(checked:boolean) {
-        this.setState({ checked });
-      }
+//       handleChange(checked:boolean) {
+//         this.setState({ checked });
+//       }
 
-    render(){
-        return(
-            <Container>
-            <ToggleLabel>Light</ToggleLabel>
-            <ToggleSelector 
-                uncheckedIcon={false}
-                checkedIcon={false}
-                onChange={this.handleChange} 
-                checked={this.state.checked}
-            />
-            <ToggleLabel>Dark</ToggleLabel>
-        </Container>
-        )
-    }
-}
+//     render(){
+//         return(
+//             <Container>
+//             <ToggleLabel>Light</ToggleLabel>
+//             <ToggleSelector 
+//                 uncheckedIcon={false}
+//                 checkedIcon={false}
+//                 onChange={this.handleChange} 
+//                 checked={this.state.checked}
+//             />
+//             <ToggleLabel>Dark</ToggleLabel>
+//         </Container>
+//         )
+//     }
+// }
 
 const Toggle : React.FC = ()=>{
 
