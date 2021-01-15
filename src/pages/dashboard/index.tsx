@@ -1,9 +1,13 @@
 import React from 'react';
-import Layout from '../../components/Layout';
+import {Container} from './styles';
+import ContentHeader from '../../components/ContentHeader';
+
 
 const Dashboard: React.FC = ()=>{
     return (
-        <Layout />
+        <Container>
+            <ContentHeader/>
+        </Container>
     )
 }
 
