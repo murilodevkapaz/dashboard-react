@@ -1,6 +1,7 @@
 import React from 'react';
 import { ThemeProvider } from 'styled-components';
 import Dashboard from './pages/dashboard';
+import List from './pages/list';
 
 import Layout from './components/Layout';
 import GlobalStyles from './styles/globalStyles';
@@ -14,7 +15,7 @@ const App: React.FC = () => {
             <GlobalStyles />
 
             <Layout>
-                <Dashboard />
+                <List />
             </Layout>
         </ThemeProvider>
     )
