@@ -3,7 +3,6 @@ import React from 'react';
 import {Container, Tag} from './styles';
 
 interface IHistoryFinanceCardProps {
-    cardColor: string;
     tagColor: string;
     title: string;
     subtitle: string;
