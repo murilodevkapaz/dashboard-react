@@ -1,10 +1,12 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import { Container, Content, Filters } from './styles';
 import ContentHeader from '../../components/ContentHeader';
 import SelectInput from '../../components/SelectInput';
 import HistoryFinancecard from '../../../src/components/HistoryFinanceCard';
 
-interface IRouteParams  {
+import gains from '../../repositories/gains';
+import expenses from '../../repositories/expenses';
+interface IRouteParams {
     match: {
         params: {
             type: string;
@@ -12,16 +14,31 @@ interface IRouteParams  {
     }
 }
 
-const List: React.FC<IRouteParams> = ({match}) => {
-    const {type}  = match.params;
+interface IData {
+    id: string;
+    description: string,
+    amountFormatted: string,
+    frequency: string,
+    dateFormatted: string,
+    tagColor: string
+}
+
+const List: React.FC<IRouteParams> = ({ match }) => {
+    const [data, setData] = useState<IData[]>([]);
+
+    const { type } = match.params;
     const title = useMemo(() => {
-        return type === 'entry-balance'?'Entradas': 'Saídas';
+        return type === 'entry-balance' ? 'Entradas' : 'Saídas';
     }, [type]);//no colchete fica escutando se algo mudar (o que for colocado lá), se nã colocar nada, ele executa apenas uma vez
 
     const lineColor = useMemo(() => {
         //se for estritamente igual a entry-balancy retorna o tipo e usa como{lineColor}
-        return type === 'entry-balance'?'#F7931B': '#E44C43';
+        return type === 'entry-balance' ? '#F7931B' : '#E44C43';
     }, [type]);
+
+    const listData = useMemo(() => {
+        return type === 'entry-balance' ? gains : expenses;
+    }, [type])
 
     const months = [
         {
@@ -46,7 +63,20 @@ const List: React.FC<IRouteParams> = ({match}) => {
         }
     ];
 
+    useEffect(() => {
+        const response = listData.map(item => {
+            return {
+                id: String(Math.random()* data.length),
+                description: item.description,
+                amountFormatted: item.amount,
+                frequency: item.frequency,
+                dateFormatted: item.date,
+                tagColor: item.frequency === 'recorrente'?'#4E41F0': '#E44C4E'
+            }
+        })
 
+        setData(response)
+    }, []);
     return (
         <Container>
             <ContentHeader title={title} lineColor={lineColor}>
@@ -66,97 +96,19 @@ const List: React.FC<IRouteParams> = ({match}) => {
             </Filters>
 
             <Content>
-                <HistoryFinancecard
+                {
+                    data.map(item => (
+                        <HistoryFinancecard
+                            key={item.id}
+                            tagColor={item.tagColor}
+                            title={item.description}
+                            subtitle={item.dateFormatted}
+                            amount={item.amountFormatted}
+                        />
+                    ))
+                }
 
-                    tagColor="#E44C4E"
-                    title="Conta de luz"
-                    subtitle="27/07/2020"
-                    amount="R$ 130,00"
-                />
-                <HistoryFinancecard
 
-                    tagColor="#E44C4E"
-                    title="Conta de luz"
-                    subtitle="27/07/2020"
-                    amount="R$ 130,00"
-                />
-                <HistoryFinancecard
-
-                    tagColor="#E44C4E"
-                    title="Conta de luz"
-                    subtitle="27/07/2020"
-                    amount="R$ 130,00"
-                />
-                <HistoryFinancecard
-
-                    tagColor="#E44C4E"
-                    title="Conta de luz"
-                    subtitle="27/07/2020"
-                    amount="R$ 130,00"
-                />
-                <HistoryFinancecard
-
-                    tagColor="#E44C4E"
-                    title="Conta de luz"
-                    subtitle="27/07/2020"
-                    amount="R$ 130,00"
-                />
-                <HistoryFinancecard
-
-                    tagColor="#E44C4E"
-                    title="Conta de luz"
-                    subtitle="27/07/2020"
-                    amount="R$ 130,00"
-                />
-                <HistoryFinancecard
-
-                    tagColor="#E44C4E"
-                    title="Conta de luz"
-                    subtitle="27/07/2020"
-                    amount="R$ 130,00"
-                />
-                <HistoryFinancecard
-
-                    tagColor="#E44C4E"
-                    title="Conta de luz"
-                    subtitle="27/07/2020"
-                    amount="R$ 130,00"
-                />
-                <HistoryFinancecard
-
-                    tagColor="#E44C4E"
-                    title="Conta de luz"
-                    subtitle="27/07/2020"
-                    amount="R$ 130,00"
-                />
-                <HistoryFinancecard
-
-                    tagColor="#E44C4E"
-                    title="Conta de luz"
-                    subtitle="27/07/2020"
-                    amount="R$ 130,00"
-                />
-                <HistoryFinancecard
-
-                    tagColor="#E44C4E"
-                    title="Conta de luz"
-                    subtitle="27/07/2020"
-                    amount="R$ 130,00"
-                />
-                <HistoryFinancecard
-
-                    tagColor="#E44C4E"
-                    title="Conta de luz"
-                    subtitle="27/07/2020"
-                    amount="R$ 130,00"
-                />
-                <HistoryFinancecard
-
-                    tagColor="#E44C4E"
-                    title="Conta de luz"
-                    subtitle="27/07/2020"
-                    amount="R$ 130,00"
-                />
             </Content>
         </Container>
 
