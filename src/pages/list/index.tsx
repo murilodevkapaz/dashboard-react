@@ -1,11 +1,28 @@
-import React from 'react';
-import { Container, Content , Filters} from './styles';
+import React, { useMemo } from 'react';
+import { Container, Content, Filters } from './styles';
 import ContentHeader from '../../components/ContentHeader';
 import SelectInput from '../../components/SelectInput';
 import HistoryFinancecard from '../../../src/components/HistoryFinanceCard';
 
+interface IRouteParams  {
+    match: {
+        params: {
+            type: string;
+        }
+    }
+}
 
-const List: React.FC = () => {
+const List: React.FC<IRouteParams> = ({match}) => {
+    const {type}  = match.params;
+    const title = useMemo(() => {
+        return type === 'entry-balance'?'Entradas': 'Saídas';
+    }, [type]);//no colchete fica escutando se algo mudar (o que for colocado lá), se nã colocar nada, ele executa apenas uma vez
+
+    const lineColor = useMemo(() => {
+        //se for estritamente igual a entry-balancy retorna o tipo e usa como{lineColor}
+        return type === 'entry-balance'?'#F7931B': '#E44C43';
+    }, [type]);
+
     const months = [
         {
             value: 7, label: 'Julho'
@@ -32,7 +49,7 @@ const List: React.FC = () => {
 
     return (
         <Container>
-            <ContentHeader title="Saídas" lineColor="#f7931b">
+            <ContentHeader title={title} lineColor={lineColor}>
                 <SelectInput options={months} />
                 <SelectInput options={years} />
             </ContentHeader>
@@ -41,11 +58,11 @@ const List: React.FC = () => {
                 <button
                     type="button"
                     className="tag-filter tag-filter-recurrent"
-                    >Recorrentes</button>
-                                    <button
+                >Recorrentes</button>
+                <button
                     type="button"
                     className="tag-filter tag-filter-eventual"
-                    >Eventuais</button>
+                >Eventuais</button>
             </Filters>
 
             <Content>

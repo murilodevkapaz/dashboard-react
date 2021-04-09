@@ -1,7 +1,6 @@
 import React from 'react';
 import { ThemeProvider } from 'styled-components';
-import Dashboard from './pages/dashboard';
-import List from './pages/list';
+import Routes from './routes';
 
 
 import Layout from './components/Layout';
@@ -14,10 +13,7 @@ const App: React.FC = () => {
     return (
         <ThemeProvider theme={dark}>
             <GlobalStyles />
-
-            <Layout>
-                <List />
-            </Layout>
+            <Routes />
         </ThemeProvider>
     )
 }
