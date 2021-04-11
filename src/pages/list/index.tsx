@@ -27,8 +27,8 @@ interface IData {
 
 const List: React.FC<IRouteParams> = ({ match }) => {
     const [data, setData] = useState<IData[]>([]);
-    const [monthSelected, setMonthSelected] = useState<string>(String(new Date().getMonth()+1));
-    const [yearSelected, setYearSelected] = useState<string>(String(new Date().getFullYear()));
+    const [monthSelected, setMonthSelected] = useState<string>(String(new Date().getMonth() + 1));
+    const [yearSelected, setYearSelected] = useState<string>("2020");
 
     const { type } = match.params;
     const title = useMemo(() => {
@@ -84,6 +84,9 @@ const List: React.FC<IRouteParams> = ({ match }) => {
     ];
     const years = [
         {
+            value: 2021, label: 2021,
+        },
+        {
             value: 2020, label: 2020,
         },
         {
@@ -94,28 +97,35 @@ const List: React.FC<IRouteParams> = ({ match }) => {
         }
     ];
 
-    useEffect(() => {
-        const filteredDate = listData.filter(item => {
+    useEffect(() => {        
+        //const { data } = pageData;
+        console.log(listData);
+        const filteredData = listData.filter(item => {
             const date = new Date(item.date);
-            const month = String(date.getMonth()+1);
+            const month = String(date.getMonth() + 1);
             const year = String(date.getFullYear());
 
             return month === monthSelected && year === yearSelected;
         });
 
-        const formattedData  = filteredDate.map(item=>{
+        console.log(filteredData);
+
+        const formattedData = filteredData.map(item => {
             return {
-                id: String(Date.now()),
+                id: String(Math.random()* Date.now()),
                 description: item.description,
                 amountFormatted: formatCurrency(item.amount),
                 frequency: item.frequency,
                 dateFormatted: formatDate(item.date),
-                tagColor: item.frequency === 'recorrente'?'#4E41F0': '#E44C4E'
+                tagColor: item.frequency === 'recorrente' ? '#4E41F0' : '#E44C4E',
             }
         });
 
+        console.log(formattedData);
+        
         setData(formattedData);
-    }, [listData, monthSelected, yearSelected, data.length]);
+    },[listData, monthSelected, yearSelected, data.length]); 
+
     return (
         <Container>
             <ContentHeader title={title} lineColor={lineColor}>
