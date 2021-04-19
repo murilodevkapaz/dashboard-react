@@ -31,8 +31,8 @@ interface IData {
 const List: React.FC<IRouteParams> = ({ match }) => {
     //states 
     const [data, setData] = useState<IData[]>([]);
-    const [monthSelected, setMonthSelected] = useState<string>(String(new Date().getMonth() + 1));
-    const [yearSelected, setYearSelected] = useState<string>("2020");
+    const [monthSelected, setMonthSelected] = useState<number>(new Date().getMonth() + 1);
+    const [yearSelected, setYearSelected] = useState<number>(2020);
     const [frequencyFilterSelected, setfrequencyFilterSelected] = useState(['recorrente', 'eventual']);
 
     const movimentType = match.params.type;
@@ -96,8 +96,8 @@ const List: React.FC<IRouteParams> = ({ match }) => {
 
         const filteredData = pageData.data.filter(item => {
             const date = new Date(item.date);
-            const month = String(date.getMonth() + 1);
-            const year = String(date.getFullYear());
+            const month = date.getMonth() + 1;
+            const year = date.getFullYear();
 
             return month === monthSelected && year === yearSelected && frequencyFilterSelected.includes(item.frequency);
         });
@@ -121,12 +121,12 @@ const List: React.FC<IRouteParams> = ({ match }) => {
             <ContentHeader title={pageData.title} lineColor={pageData.lineColor}>
                 <SelectInput
                     options={months}
-                    onChange={e => setMonthSelected(e.target.value)}
+                    onChange={e => setMonthSelected(parseInt(e.target.value))}
                     defaultValue={monthSelected}
                 />
                 <SelectInput
                     options={years}
-                    onChange={e => setYearSelected(e.target.value)}
+                    onChange={e => setYearSelected(parseInt(e.target.value))}
                     defaultValue={yearSelected}
                 />
             </ContentHeader>
