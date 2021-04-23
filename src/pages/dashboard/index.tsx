@@ -1,7 +1,8 @@
 import React, { useState, useMemo } from 'react';
-import { Container } from './styles';
+import { Container, Content } from './styles';
 import ContentHeader from '../../components/ContentHeader';
 import SelectInput from '../../components/SelectInput';
+import WalletBox from '../../components/WalletBox';
 
 import expenses from '../../repositories/expenses';
 import gains from '../../repositories/gains';
@@ -26,23 +27,23 @@ const Dashboard: React.FC = () => {
     ];
 
     //hooks
-    const handleMonthSelected = (month: string) =>{
-        try{
+    const handleMonthSelected = (month: string) => {
+        try {
             const parseMonth = Number(month);
             setMonthSelected(parseMonth);
         }
-        catch(e){
+        catch (e) {
             throw new Error('invalid month value. Is accept 0 - 24.');
         }
     }
 
-    
-    const handleYearSelected = (year: string) =>{
-        try{
+
+    const handleYearSelected = (year: string) => {
+        try {
             const parseYear = Number(year);
             setMonthSelected(parseYear);
         }
-        catch(e){
+        catch (e) {
             throw new Error('invalid year value. Is accept integer numbers');
         }
     }
@@ -65,30 +66,53 @@ const Dashboard: React.FC = () => {
             uniqYears.add(year);
         })
 
-        return Array.from(uniqYears).map(year=>{
+        return Array.from(uniqYears).map(year => {
             return {
                 value: year,
                 label: year,
             }
         })
-    },[]);
+    }, []);
 
-        return (
-            <Container>
-                <ContentHeader title="Dashboard" lineColor="#FFF">
-                    <SelectInput
-                        options={months}
-                        onChange={e => setMonthSelected(parseInt(e.target.value))}
-                        defaultValue={monthSelected}
-                    />
-                    <SelectInput
-                        options={years}
-                        onChange={e => setYearSelected(parseInt(e.target.value))}
-                        defaultValue={yearSelected}
-                    />
-                </ContentHeader>
-            </Container>
-        )
-    }
+    return (
+        <Container>
+            <ContentHeader title="Dashboard" lineColor="#FFF">
+                <SelectInput
+                    options={months}
+                    onChange={e => setMonthSelected(parseInt(e.target.value))}
+                    defaultValue={monthSelected}
+                />
+                <SelectInput
+                    options={years}
+                    onChange={e => setYearSelected(parseInt(e.target.value))}
+                    defaultValue={yearSelected}
+                />
+            </ContentHeader>
+            <Content>
+                <WalletBox
+                    title="saldo"
+                    amount={150.00}
+                    footerLabel="atualizado com base nas entradas e saídas"
+                    icon="dollar"
+                    color="#4E41F0"
+                />
+                <WalletBox
+                    title="entradas"
+                    amount={5000.00}
+                    footerLabel="atualizado com base nas entradas e saídas"
+                    icon="arrowUp"
+                    color="#F7931B"
+                />
+                <WalletBox
+                    title="saídas"
+                    amount={4850.00}
+                    footerLabel="atualizado com base nas entradas e saídas"
+                    icon="arrowDown"
+                    color="#E44C4E"
+                />
+            </Content>
+        </Container>
+    )
+}
 
 export default Dashboard;
