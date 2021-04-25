@@ -2,8 +2,6 @@ import React from 'react';
 import { ThemeProvider } from 'styled-components';
 import Routes from './routes';
 
-
-import Layout from './components/Layout';
 import GlobalStyles from './styles/globalStyles';
 import dark from './styles/themes/dark';
 
