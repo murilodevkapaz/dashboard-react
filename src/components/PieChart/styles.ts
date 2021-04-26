@@ -72,5 +72,7 @@ export const LegendContainer = styled.ul`
 `;
 
 export const SideRight = styled.main`
-
+    display: flex;
+    flex: 1;
+    justify-content: center;
 `;

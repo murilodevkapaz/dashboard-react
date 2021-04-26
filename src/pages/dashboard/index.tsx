@@ -103,6 +103,32 @@ const Dashboard: React.FC = () => {
 
     }, [totalGains, totalExpenses]);//são as dependencias que serão escutadas, quando os dois mudare executa de novo
 
+    const relationExpensesVersusGains = useMemo(()=>{
+        const total:number = totalGains + totalExpenses;
+        const percentGains:number = (totalGains/total)*100;
+        const percentExpenses:number = (totalExpenses/total)*100;
+
+        const data = [
+            {
+                name: "Entradas",
+                value: totalExpenses,
+                percent: Number(percentExpenses.toFixed(1)),
+                color: "#E44C4E"
+
+            },
+            {
+                name: "Saídas",
+                value: totalGains,
+                percent:Number(percentGains.toFixed(1)),
+                color: "#F7931B"
+
+            }
+        ]
+
+        return data;
+
+    },[totalGains, totalExpenses])
+
     const message = useMemo(() => {
         if (totalBalance > 0) {
             return {
@@ -199,7 +225,7 @@ const Dashboard: React.FC = () => {
                     icon={message.icon}
                 />
 
-                <PieChart />
+                <PieChart data={relationExpensesVersusGains}/>
             </Content>
         </Container>
     )
