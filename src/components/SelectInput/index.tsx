@@ -1,6 +1,6 @@
 import React from 'react';
 import { Content } from './styles';
-import ContentHeader from '../ContentHeader';
+
 
 interface ISelectInputProps {
     options: {

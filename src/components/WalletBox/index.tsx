@@ -22,9 +22,9 @@ const WalletBox: React.FC<IWalletBoxProps> = ({
 }) => {
 
     const iconSelected = useMemo(() => {
-        if (icon == 'dollar') return dollarImg;
-        if (icon == 'arrowUp') return arrowUpImg;
-        if (icon == 'arrowDown') return arrowDownImg;
+        if (icon === 'dollar') return dollarImg;
+        if (icon === 'arrowUp') return arrowUpImg;
+        if (icon === 'arrowDown') return arrowDownImg;
     }, [icon]);
 
 

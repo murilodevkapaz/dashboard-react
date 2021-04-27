@@ -5,6 +5,7 @@ import SelectInput from '../../components/SelectInput';
 import WalletBox from '../../components/WalletBox';
 import MessageBox from '../../components/MessageBox';
 import PieChart from '../../components/PieChart';
+import HistoryBox from '../../components/HistoryBox';
 
 import expenses from '../../repositories/expenses';
 import gains from '../../repositories/gains';
@@ -20,39 +21,27 @@ const Dashboard: React.FC = () => {
     const [yearSelected, setYearSelected] = useState<number>(2020);
 
 
-    const options = [
-        {
-            value: 'Rodrigo', label: 'Rodrigo'
-        },
-        {
-            value: 'Maria', label: 'Maria'
-        },
-        {
-            value: 'Maria', label: 'Maria',
-        }
-    ];
-
     //hooks
-    const handleMonthSelected = (month: string) => {
-        try {
-            const parseMonth = Number(month);
-            setMonthSelected(parseMonth);
-        }
-        catch (e) {
-            throw new Error('invalid month value. Is accept 0 - 24.');
-        }
-    }
+    // const handleMonthSelected = (month: string) => {
+    //     try {
+    //         const parseMonth = Number(month);
+    //         setMonthSelected(parseMonth);
+    //     }
+    //     catch (e) {
+    //         throw new Error('invalid month value. Is accept 0 - 24.');
+    //     }
+    // }
 
 
-    const handleYearSelected = (year: string) => {
-        try {
-            const parseYear = Number(year);
-            setMonthSelected(parseYear);
-        }
-        catch (e) {
-            throw new Error('invalid year value. Is accept integer numbers');
-        }
-    }
+    // const handleYearSelected = (year: string) => {
+    //     try {
+    //         const parseYear = Number(year);
+    //         setMonthSelected(parseYear);
+    //     }
+    //     catch (e) {
+    //         throw new Error('invalid year value. Is accept integer numbers');
+    //     }
+    // }
 
     const totalExpenses = useMemo(() => {
         let total: number = 0;
@@ -103,10 +92,10 @@ const Dashboard: React.FC = () => {
 
     }, [totalGains, totalExpenses]);//são as dependencias que serão escutadas, quando os dois mudare executa de novo
 
-    const relationExpensesVersusGains = useMemo(()=>{
-        const total:number = totalGains + totalExpenses;
-        const percentGains:number = (totalGains/total)*100;
-        const percentExpenses:number = (totalExpenses/total)*100;
+    const relationExpensesVersusGains = useMemo(() => {
+        const total: number = totalGains + totalExpenses;
+        const percentGains: number = (totalGains / total) * 100;
+        const percentExpenses: number = (totalExpenses / total) * 100;
 
         const data = [
             {
@@ -119,7 +108,7 @@ const Dashboard: React.FC = () => {
             {
                 name: "Saídas",
                 value: totalGains,
-                percent:Number(percentGains.toFixed(1)),
+                percent: Number(percentGains.toFixed(1)),
                 color: "#F7931B"
 
             }
@@ -127,7 +116,60 @@ const Dashboard: React.FC = () => {
 
         return data;
 
-    },[totalGains, totalExpenses])
+    }, [totalGains, totalExpenses])
+
+    const historyData = useMemo(() => {
+        let dataChart = (listOfMonths.map((_, month) => {
+
+            let amountEntry = 0;
+            gains.forEach(gain => {
+                const date = new Date(gain.date);
+                const gainMonth = date.getMonth();
+                const gainYear = date.getFullYear();
+
+                if (gainMonth === month && gainYear === yearSelected) {
+                    try {
+                        amountEntry += Number(gain.amount);
+                    }
+                    catch {
+                        throw new Error("AmountEntry is invalid. It must be valid number.")
+                    }
+                }
+            });
+
+            let amountOutput = 0;
+            expenses.forEach(expense => {
+                const date = new Date(expense.date);
+                const expenseMonth = date.getMonth();
+                const expenseYear = date.getFullYear();
+
+                if (expenseMonth === month && expenseYear === yearSelected) {
+                    try {
+                        amountOutput += Number(expense.amount);
+                    }
+                    catch {
+                        throw new Error("AmountOutput is invalid. It must be valid number.")
+                    }
+                }
+            });
+            const data = {
+                monthNumber: month,
+                month: listOfMonths[month].substr(0, 3),
+                amountEntry,
+                amountOutput
+            }
+
+            return data;
+        })
+            .filter(item => {
+                const currentMonth = new Date().getMonth();
+
+                return item.monthNumber <= currentMonth;
+            })
+        )
+
+        return dataChart;
+    }, [yearSelected])
 
     const message = useMemo(() => {
         if (totalBalance > 0) {
@@ -138,7 +180,7 @@ const Dashboard: React.FC = () => {
                 icon: happyImg
             }
         }
-        else if(totalBalance === 0) {
+        else if (totalBalance === 0) {
             return {
                 title: "Ufa!!",
                 description: "Neste mês você gastou exatamente o que guanhou",
@@ -146,7 +188,7 @@ const Dashboard: React.FC = () => {
                 icon: grinningImg
             }
         }
-        else{
+        else {
             return {
                 title: "Que triste! ",
                 description: "Neste mês, você gastou mais do que deveria!",
@@ -225,7 +267,13 @@ const Dashboard: React.FC = () => {
                     icon={message.icon}
                 />
 
-                <PieChart data={relationExpensesVersusGains}/>
+                <PieChart data={relationExpensesVersusGains} />
+
+                <HistoryBox
+                    data={historyData}
+                    LineColorAmountEntry="#F7931B"
+                    LineColorAmountOutput="#E44C4E"
+                />
             </Content>
         </Container>
     )

@@ -6,7 +6,7 @@ import HistoryFinancecard from '../../../src/components/HistoryFinanceCard';
 import { uuid } from 'uuidv4';
 
 import gains from '../../repositories/gains';
-import expenses from '../../repositories/expenses';
+
 import formatCurrency from '../../utils/formatCurrency';
 import formatDate from '../../utils/formatDate';
 import listOfMonths from '../../utils/months';
@@ -52,26 +52,26 @@ const List: React.FC<IRouteParams> = ({ match }) => {
             }
     }, [movimentType])
 
-    const handleMonthSelected = (month: string) =>{
-        try{
-            const parseMonth = Number(month);
-            setMonthSelected(parseMonth);
-        }
-        catch(e){
-            throw new Error('invalid month value. Is accept 0 - 24.');
-        }
-    }
+    // const handleMonthSelected = (month: string) =>{
+    //     try{
+    //         const parseMonth = Number(month);
+    //         setMonthSelected(parseMonth);
+    //     }
+    //     catch(e){
+    //         throw new Error('invalid month value. Is accept 0 - 24.');
+    //     }
+    // }
 
     
-    const handleYearSelected = (year: string) =>{
-        try{
-            const parseYear = Number(year);
-            setMonthSelected(parseYear);
-        }
-        catch(e){
-            throw new Error('invalid year value. Is accept integer numbers');
-        }
-    }
+    // const handleYearSelected = (year: string) =>{
+    //     try{
+    //         const parseYear = Number(year);
+    //         setMonthSelected(parseYear);
+    //     }
+    //     catch(e){
+    //         throw new Error('invalid year value. Is accept integer numbers');
+    //     }
+    // }
 
     const months = useMemo(() => {
         return listOfMonths.map((month, index) => {

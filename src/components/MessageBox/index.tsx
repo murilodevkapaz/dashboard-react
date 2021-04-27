@@ -1,6 +1,6 @@
 import React from 'react';
 import {Content} from './styles';
-import happyImg from '../../assets/happy.svg';
+
 
 interface ImessageBoxProps {
     title: string;
