@@ -94,22 +94,23 @@ const Dashboard: React.FC = () => {
     }, [totalGains, totalExpenses]);//são as dependencias que serão escutadas, quando os dois mudare executa de novo
 
     const relationExpensesVersusGains = useMemo(() => {
-        const total: number = totalGains + totalExpenses;
-        const percentGains: number = (totalGains / total) * 100;
-        const percentExpenses: number = (totalExpenses / total) * 100;
+        const total = totalGains + totalExpenses;
+
+        const percentGains = Number(((totalGains / total) * 100).toFixed(1));
+        const percentExpenses = Number(((totalExpenses / total) * 100).toFixed(1));
 
         const data = [
             {
                 name: "Entradas",
-                value: totalExpenses,
-                percent: Number(percentExpenses.toFixed(1)),
+                value: totalGains?totalGains:0,
+                percent: percentGains?percentGains:0,
                 color: "#E44C4E"
 
             },
             {
                 name: "Saídas",
-                value: totalGains,
-                percent: Number(percentGains.toFixed(1)),
+                value: totalExpenses?totalExpenses:0,
+                percent: percentExpenses?percentExpenses:0,
                 color: "#F7931B"
 
             }
@@ -193,18 +194,20 @@ const Dashboard: React.FC = () => {
         });
 
         const total = amountRecurrent + amountEventual;
-        const percent = Number(((amountEventual/total) * 100).toFixed(1));
+        const recurrentPercent = Number(((amountRecurrent/total) * 100).toFixed(1));
+        const eventualPercent = Number(((amountEventual/total) * 100).toFixed(1));
+
         return [
             {
                 name: 'Recorrentes',
                 amount: amountRecurrent,
-                percent,
+                percent: recurrentPercent? recurrentPercent:0,
                 color: "#F7931B"
             },
             {
                 name: 'Eventual',
                 amount: amountEventual,
-                percent,
+                percent: eventualPercent?eventualPercent:0,
                 color: "#E44C4E"
             },
         ];
@@ -230,19 +233,23 @@ const Dashboard: React.FC = () => {
             }
         });
 
+        
         const total = amountRecurrent + amountEventual;
-        const percent = Number(((amountEventual/total) * 100).toFixed(1));
+
+        const recurrentPercent = Number(((amountRecurrent/total) * 100).toFixed(1));
+        const eventualPercent = Number(((amountEventual/total) * 100).toFixed(1));
+
         return [
             {
                 name: 'Recorrentes',
                 amount: amountRecurrent,
-                percent,
+                percent: recurrentPercent ? eventualPercent: 0, 
                 color: "#F7931B"
             },
             {
                 name: 'Eventual',
                 amount: amountEventual,
-                percent,
+                percent: eventualPercent ? eventualPercent:0,
                 color: "#E44C4E"
             },
         ];
@@ -257,6 +264,14 @@ const Dashboard: React.FC = () => {
                 icon: happyImg
             }
         }
+        else if(totalBalance === 0 && totalExpenses === 0){
+            return {
+                title: "Ops!",
+                description: "Neste mês, não há registro de entradas ou saídas",
+                footerTest: "Parece que você não fez nenhum registro no mês/ano selecionado",
+                icon: grinningImg
+            }
+        }
         else if (totalBalance === 0) {
             return {
                 title: "Ufa!!",
@@ -265,6 +280,7 @@ const Dashboard: React.FC = () => {
                 icon: grinningImg
             }
         }
+
         else {
             return {
                 title: "Que triste! ",
@@ -273,7 +289,7 @@ const Dashboard: React.FC = () => {
                 icon: sadImg
             }
         }
-    }, [totalBalance])
+    }, [totalBalance, totalGains, totalExpenses])
 
     const months = useMemo(() => {
         return listOfMonths.map((month, index) => {
