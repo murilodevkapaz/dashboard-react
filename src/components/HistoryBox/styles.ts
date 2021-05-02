@@ -14,7 +14,7 @@ export const Container = styled.div`
     color: ${props => props.theme.colors.white};
 
     margin: 10px 0;
-    padding: 30px 20px;
+    padding: 40px 20px;
 
     border-radius: 7px;
 `;
