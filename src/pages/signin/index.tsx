@@ -22,7 +22,7 @@ const Signin: React.FC = () => {
         <Container>
             <Logo>
                 <img src={logoImg} alt="Minha Carteira" />
-                <h2>Minha Carteira</h2>
+                <h3>Minha Carteira</h3>
             </Logo>
             <Form onSubmit={() => signIn(email, password)}>
                 <FormTitle>Entrar</FormTitle>
