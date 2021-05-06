@@ -1,4 +1,7 @@
+//libraries
 import React, { useState } from 'react';
+
+//components
 import {
     Container,
     Logo,
@@ -8,10 +11,14 @@ import {
 import Input from '../../components/Input';
 import Button from '../../components/Button';
 
+//images
 import logoImg from '../../assets/logo.svg';
 
+//hooks
 import {useAuth} from '../../hooks/auth';
 
+
+//FC
 const Signin: React.FC = () => {
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
@@ -28,13 +35,13 @@ const Signin: React.FC = () => {
                 <FormTitle>Entrar</FormTitle>
                 <Input
                     type="email"
-                    placeholder="exemplo@exemplo.com"
+                    placeholder="E-mail"
                     onChange={e => setEmail(e.target.value)}
                     required
                 />
                 <Input
                     type="password"
-                    placeholder="senha"
+                    placeholder="Senha"
                     onChange={e => setPassword(e.target.value)}
                     required
                 />
