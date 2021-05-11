@@ -36,7 +36,6 @@ export const SideRight = styled.main`
     display: flex;
     justify-content: center;
     padding-top: 35px;
-
 `;
 
 export const Legend = styled.li<ILegendProps>`
@@ -62,6 +61,7 @@ export const Legend = styled.li<ILegendProps>`
             margin-left: 5px;
         }
 
+
 `;
 
 export const LegendContainer = styled.ul`
@@ -82,4 +82,6 @@ export const LegendContainer = styled.ul`
     ::-webkit-scrollbar-track{
         background-color: ${props=>props.theme.colors.tertiary};
     }
+
+
 `;
