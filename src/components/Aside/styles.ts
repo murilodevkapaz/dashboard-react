@@ -43,9 +43,7 @@ export const LogImg = styled.img`
     width: 40px;
 
     @media(max-width: 600px){
-        
-        height: 25px;
-        width: 25px;
+        display: none;
     }
 `;
 
@@ -109,5 +107,30 @@ export const MenuItemButton = styled.button`
     >svg {
         font-size: 18px;
         margin-right: 5px;
+    }
+`;
+
+export const ToggleMenu = styled.button`
+    height: 40px;
+    width: 40px;
+    border-radius: 5px;
+    font-size: 22px;
+    background-color: ${props=>props.theme.colors.warning};
+    color: ${props=>props.theme.colors.white};
+
+    transition: opacity .3s;
+
+    &:hover{
+        opacity: 0.7;
+    }
+
+    display: none;
+    justify-content: center;
+    align-items: center;
+
+    @media(max-width: 600px){
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 `;
