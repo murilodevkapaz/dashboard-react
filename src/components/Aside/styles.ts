@@ -18,7 +18,7 @@ export const Container = styled.div<IContainerProps>`
     position: relative;
 
     @media(max-width: 600px){
-        padding-left: 7px;
+        padding-left: 20px;
         position: fixed;
         z-index: 2;
         width: 170px;
@@ -32,6 +32,7 @@ export const Container = styled.div<IContainerProps>`
 
         `};
     }
+
 `;
 
 export const Header = styled.header`
