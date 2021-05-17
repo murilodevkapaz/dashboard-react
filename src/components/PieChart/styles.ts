@@ -33,6 +33,10 @@ export const Container = styled.div`
 
     animation: ${animate} .5s;
 
+    .recharts-responsive-container {
+        position: relative;
+    }
+
     @media(max-width: 770px){
         display: flex;  
         width: 100%;
@@ -42,6 +46,7 @@ export const Container = styled.div`
         height: 200px;
         .recharts-responsive-container {
             margin: -20px -20px;
+
          }
     }
 `;

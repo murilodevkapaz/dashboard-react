@@ -40,7 +40,7 @@ const PieChartC: React.FC<IPiechartProps> = ({ data }) => (
 
         <SideRight>
             <ResponsiveContainer>
-                <PieChart>
+                <PieChart style={{position: "absolute", right: "10px"}}>
                     <Pie data={data} dataKey="percent">
                         {
                             data.map(indicator => (
